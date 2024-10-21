@@ -1,0 +1,6 @@
+[main] 10:15:03,978 INFO  com.marina.utils.Log.startTestCase(Log.java:11) - =====================================Verify Successful Login Only TEST START=========================================
+[main] 10:17:55,150 INFO  com.marina.utils.Log.startTestCase(Log.java:11) - =====================================Verify Successful Login Only TEST START=========================================
+[main] 10:17:57,801 ERROR com.marina.utils.Log.error(Log.java:34) - =====================================verifyLogin_Tc_001 TEST FAILED =========================================
+[main] 10:20:13,143 INFO  com.marina.utils.Log.startTestCase(Log.java:11) - =====================================Verify Successful Login Only TEST START=========================================
+[main] 10:20:15,953 ERROR com.marina.utils.Log.error(Log.java:34) - =====================================verifyLogin_Tc_001 TEST FAILED =========================================
+[main] 21:37:40,446 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Verify Successful Login Only TEST START=========================================
