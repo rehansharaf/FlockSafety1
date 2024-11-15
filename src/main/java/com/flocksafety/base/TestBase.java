@@ -4,29 +4,50 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import java.util.Set;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.log4j.xml.DOMConfigurator;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.Parameters;
+import org.testng.asserts.SoftAssert;
 
 import com.flocksafety.utils.ExtentManager;
-
-import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class TestBase {
 
 	public WebDriver driver;
 	public static Properties prop;
+	
+	
+	public static Map<String, String> mobileApp = new HashMap<String, String>();
+	public static Map<String, String> system = new HashMap<String, String>();
+
+
+	public static String testEnv = "UAT"; 	
+	public static Map<String, String> rndNum = new HashMap<String,String>();
+	public static Map<String, String> env = new HashMap<String, String>();
+	public static Map<String, String> sfdc = new HashMap<String, String>();
+	public static Map<String, String> url = new HashMap<String, String>();
+	public static Map<String, String> profile = new HashMap<String, String>();
+	public static SoftAssert softAssertion = new SoftAssert();
+	public static SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	public static List<Object> list = new ArrayList<Object>();
+	public static Set<Object> set = new HashSet<Object>();
+
+
+	
+	
 
 	@BeforeSuite
 	public void loadConfig() throws IOException {

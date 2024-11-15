@@ -1,0 +1,71 @@
+[main] 07:13:07,702 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Verify Successful Login Only TEST START=========================================
+[main] 07:15:16,020 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Verify Successful Login Only TEST START=========================================
+[main] 07:15:54,215 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Verify Successful Login Only TEST START=========================================
+[main] 07:17:35,151 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Verify Successful Login Only TEST START=========================================
+[main] 07:17:40,348 INFO  com.flocksafety.utils.Log.endTestCase(Log.java:15) - =====================================Verify Successful Login Only TEST END=========================================
+[main] 07:25:02,474 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Verify Successful Login Only TEST START=========================================
+[main] 08:08:04,669 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Verify Successful Login Only TEST START=========================================
+[main] 08:12:54,628 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Verify Successful Login Only TEST START=========================================
+[main] 08:15:49,709 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Verify Successful Login Only TEST START=========================================
+[main] 08:16:05,013 INFO  com.flocksafety.utils.Log.endTestCase(Log.java:15) - =====================================Verify Successful Login Only TEST END=========================================
+[main] 10:28:20,851 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Verify Successful Login Only TEST START=========================================
+[main] 10:28:28,415 INFO  com.flocksafety.utils.Log.endTestCase(Log.java:15) - =====================================Verify Successful Login Only TEST END=========================================
+[main] 10:31:26,896 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Start testing TC001 TEST START=========================================
+[main] 10:31:33,897 INFO  com.flocksafety.utils.Log.endTestCase(Log.java:15) - =====================================Verify Successful Login Only TEST END=========================================
+[main] 10:42:28,523 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Start testing TC001 TEST START=========================================
+[main] 10:42:50,942 INFO  com.flocksafety.utils.Log.endTestCase(Log.java:15) - =====================================Verify Successful Login Only TEST END=========================================
+[main] 10:46:47,501 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Start testing TC001 TEST START=========================================
+[main] 10:46:53,328 INFO  com.flocksafety.utils.Log.endTestCase(Log.java:15) - =====================================Verify Successful Login Only TEST END=========================================
+[main] 11:14:37,201 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Start Loging in to SF TEST START=========================================
+[main] 11:14:43,936 INFO  com.flocksafety.utils.Log.endTestCase(Log.java:15) - =====================================Verify Successful Login TEST END=========================================
+[main] 15:55:24,730 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Start Loging in to SF TEST START=========================================
+[main] 15:55:33,034 INFO  com.flocksafety.utils.Log.endTestCase(Log.java:15) - =====================================Verify Successful Login TEST END=========================================
+[main] 16:53:18,907 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Start Loging in to SF TEST START=========================================
+[main] 20:08:55,624 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Start Loging in to SF TEST START=========================================
+[main] 20:09:48,523 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Start Loging in to SF TEST START=========================================
+[main] 21:16:21,116 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Start Loging in to SF TEST START=========================================
+[main] 12:58:07,100 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Start Loging in to SF TEST START=========================================
+[main] 12:58:39,575 INFO  com.flocksafety.utils.Log.endTestCase(Log.java:15) - =====================================Verify Successful Login TEST END=========================================
+[main] 13:02:47,927 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Start Loging in to SF TEST START=========================================
+[main] 13:03:04,385 INFO  com.flocksafety.utils.Log.endTestCase(Log.java:15) - =====================================Verify Successful Login TEST END=========================================
+[main] 13:03:08,037 INFO  com.flocksafety.utils.Log.info(Log.java:22) - =====================================loginToSalesforce TEST PASSED =========================================
+[main] 13:03:19,361 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Start Logout from SF TEST START=========================================
+[main] 13:03:19,374 ERROR com.flocksafety.utils.Log.error(Log.java:34) - =====================================logoutFromSalesforce TEST FAILED =========================================
+[main] 14:13:11,951 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Start Loging in to SF TEST START=========================================
+[main] 14:13:11,964 ERROR com.flocksafety.utils.Log.error(Log.java:34) - =====================================loginToSalesforce TEST FAILED =========================================
+[main] 14:13:11,974 ERROR com.flocksafety.utils.Log.error(Log.java:34) - =====================================loginToSalesforce TEST FAILED =========================================
+[main] 14:14:33,558 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Start Loging in to SF TEST START=========================================
+[main] 14:15:52,804 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Start Loging in to SF TEST START=========================================
+[main] 14:17:29,522 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Start Loging in to SF TEST START=========================================
+[main] 14:17:40,200 INFO  com.flocksafety.utils.Log.endTestCase(Log.java:15) - =====================================Verify Successful Login TEST END=========================================
+[main] 14:17:43,351 INFO  com.flocksafety.utils.Log.info(Log.java:22) - =====================================loginToSalesforce TEST PASSED =========================================
+[main] 14:17:46,459 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Start Logout from SF TEST START=========================================
+[main] 14:17:46,489 ERROR com.flocksafety.utils.Log.error(Log.java:34) - =====================================logoutFromSalesforce TEST FAILED =========================================
+[main] 14:17:46,499 ERROR com.flocksafety.utils.Log.error(Log.java:34) - =====================================logoutFromSalesforce TEST FAILED =========================================
+[main] 14:24:19,285 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Start Loging in to SF TEST START=========================================
+[main] 14:24:19,376 INFO  com.flocksafety.utils.Log.endTestCase(Log.java:15) - =====================================Verify Successful Login TEST END=========================================
+[main] 14:24:22,550 ERROR com.flocksafety.utils.Log.error(Log.java:34) - =====================================loginToSalesforce TEST FAILED =========================================
+[main] 14:24:22,560 ERROR com.flocksafety.utils.Log.error(Log.java:34) - =====================================loginToSalesforce TEST FAILED =========================================
+[main] 14:26:39,757 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Start Loging in to SF TEST START=========================================
+[main] 14:26:39,807 INFO  com.flocksafety.utils.Log.endTestCase(Log.java:15) - =====================================Verify Successful Login TEST END=========================================
+[main] 14:26:42,940 INFO  com.flocksafety.utils.Log.info(Log.java:22) - =====================================loginToSalesforce TEST PASSED =========================================
+[main] 14:26:56,637 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Start Logout from SF TEST START=========================================
+[main] 14:26:56,640 ERROR com.flocksafety.utils.Log.error(Log.java:34) - =====================================logoutFromSalesforce TEST FAILED =========================================
+[main] 14:26:56,648 ERROR com.flocksafety.utils.Log.error(Log.java:34) - =====================================logoutFromSalesforce TEST FAILED =========================================
+[main] 14:29:16,035 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Start Loging in to SF TEST START=========================================
+[main] 14:29:16,120 INFO  com.flocksafety.utils.Log.endTestCase(Log.java:15) - =====================================Verify Successful Login TEST END=========================================
+[main] 14:29:19,321 INFO  com.flocksafety.utils.Log.info(Log.java:22) - =====================================loginToSalesforce TEST PASSED =========================================
+[main] 14:29:32,391 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Start Logout from SF TEST START=========================================
+[main] 14:29:35,564 ERROR com.flocksafety.utils.Log.error(Log.java:34) - =====================================logoutFromSalesforce TEST FAILED =========================================
+[main] 14:29:35,570 ERROR com.flocksafety.utils.Log.error(Log.java:34) - =====================================logoutFromSalesforce TEST FAILED =========================================
+[main] 14:31:47,980 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Start Loging in to SF TEST START=========================================
+[main] 14:31:48,044 INFO  com.flocksafety.utils.Log.endTestCase(Log.java:15) - =====================================Verify Successful Login TEST END=========================================
+[main] 14:31:51,204 INFO  com.flocksafety.utils.Log.info(Log.java:22) - =====================================loginToSalesforce TEST PASSED =========================================
+[main] 14:32:03,421 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Start Logout from SF TEST START=========================================
+[main] 14:32:06,637 ERROR com.flocksafety.utils.Log.error(Log.java:34) - =====================================logoutFromSalesforce TEST FAILED =========================================
+[main] 14:34:21,265 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Start Loging in to SF TEST START=========================================
+[main] 14:34:21,466 INFO  com.flocksafety.utils.Log.endTestCase(Log.java:15) - =====================================Verify Successful Login TEST END=========================================
+[main] 14:34:24,701 INFO  com.flocksafety.utils.Log.info(Log.java:22) - =====================================loginToSalesforce TEST PASSED =========================================
+[main] 14:34:36,811 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Start Logout from SF TEST START=========================================
+[main] 14:34:39,997 INFO  com.flocksafety.utils.Log.endTestCase(Log.java:15) - =====================================Verify Successful Logout TEST END=========================================
+[main] 14:34:39,998 INFO  com.flocksafety.utils.Log.info(Log.java:22) - =====================================logoutFromSalesforce TEST PASSED =========================================

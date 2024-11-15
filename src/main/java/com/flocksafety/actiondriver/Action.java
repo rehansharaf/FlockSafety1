@@ -1,25 +1,22 @@
-/**
- * 
- */
+
 package com.flocksafety.actiondriver;
 
 import static org.testng.Assert.fail;
 
 import java.io.File;
-import java.io.FileInputStream;
+
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDate;
-import java.time.Month;
+
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -34,6 +31,7 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
@@ -41,6 +39,8 @@ import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.flocksafety.actioninterface.ActionInterface;
+import com.flocksafety.api.CRUDOperation;
+import com.flocksafety.api.SOQLqueryBuilder;
 import com.flocksafety.base.TestBase;
 
 /**
@@ -49,29 +49,59 @@ import com.flocksafety.base.TestBase;
  */
 public class Action extends TestBase implements ActionInterface {
 
-	Duration timeOut = Duration.ofMinutes(1);
+	long timeOut = 120;
+	WebDriver driver;
+	JavascriptExecutor js; 
+	
+	CRUDOperation 		crudOperation;
+	SOQLqueryBuilder 	soqlQueryBuilder;
+	
+	public Action(WebDriver driver) {
+	 
+		this.driver = driver;
+		js = (JavascriptExecutor) driver;
+		crudOperation = new CRUDOperation();
+		soqlQueryBuilder = new SOQLqueryBuilder();
+	}
+	
+	
+	//************************ General Functionality*****************************
 	
 	
 	@Override
-	public void scrollByVisibilityOfElement(WebDriver driver, WebElement ele) throws InterruptedException {
+	public void randomId() {
+		Integer Id = (int) (System.currentTimeMillis() / 1000);
+		String rndId = Integer.toString(Id);
+		rndNum.put("randomId", rndId);
+	}
+	
+	@Override
+	public void scrollByVisibilityOfElement(By locator) throws InterruptedException {
 		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript("arguments[0].scrollIntoView();", ele);
+		js.executeScript("arguments[0].scrollIntoView();", driver.findElement(locator));
 		Thread.sleep(1000);
 	}
+	
+	@Override
+	public  void scrollByPosition(int position) {
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("window.scrollTo(0,"+position+")");
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+	}
 
 	@Override
-	public void actionClick(WebDriver driver, WebElement ele) {
+	public void actionClick(By locator) {
 
 		Actions act = new Actions(driver);
-		act.moveToElement(ele).click().build().perform();
+		act.moveToElement(driver.findElement(locator)).click().build().perform();
 
 	}
 
 	@Override
-	public boolean findElement(WebDriver driver, WebElement ele) {
+	public boolean findElement(By locator) {
 		boolean flag = false;
 		try {
-			ele.isDisplayed();
+			driver.findElement(locator).isDisplayed();
 			flag = true;
 		} catch (Exception e) {
 			// System.out.println("Location not found: "+locatorName);
@@ -88,11 +118,11 @@ public class Action extends TestBase implements ActionInterface {
 	}
 
 	@Override
-	public boolean isDisplayed(WebDriver driver, WebElement ele) {
+	public boolean isDisplayed(By locator) {
 		boolean flag = false;
-		flag = findElement(driver, ele);
+		flag = findElement(locator);
 		if (flag) {
-			flag = ele.isDisplayed();
+			flag = driver.findElement(locator).isDisplayed();
 			if (flag) {
 				System.out.println("The element is Displayed");
 			} else {
@@ -105,11 +135,11 @@ public class Action extends TestBase implements ActionInterface {
 	}
 
 	@Override
-	public boolean isSelected(WebDriver driver, WebElement ele) {
+	public boolean isSelected(By locator) {
 		boolean flag = false;
-		flag = findElement(driver, ele);
+		flag = findElement(locator);
 		if (flag) {
-			flag = ele.isSelected();
+			flag = driver.findElement(locator).isSelected();
 			if (flag) {
 				System.out.println("The element is Selected");
 			} else {
@@ -122,11 +152,11 @@ public class Action extends TestBase implements ActionInterface {
 	}
 
 	@Override
-	public boolean isEnabled(WebDriver driver, WebElement ele) {
+	public boolean isEnabled(By locator) {
 		boolean flag = false;
-		flag = findElement(driver, ele);
+		flag = findElement(locator);
 		if (flag) {
-			flag = ele.isEnabled();
+			flag = driver.findElement(locator).isEnabled();
 			if (flag) {
 				System.out.println("The element is Enabled");
 			} else {
@@ -146,14 +176,14 @@ public class Action extends TestBase implements ActionInterface {
 	 * @return - true/false
 	 */
 	@Override
-	public boolean type(WebElement ele, String text) {
+	public boolean type(By locator, String text) {
 		
 		String errorMessage = null;
 		boolean flag = false;
 		try {
-			flag = ele.isDisplayed();
-			ele.clear();
-			ele.sendKeys(text);
+			flag = driver.findElement(locator).isDisplayed();
+			driver.findElement(locator).clear();
+			driver.findElement(locator).sendKeys(text);
 			// logger.info("Entered text :"+text);
 			flag = true;
 		} catch (Exception e) {
@@ -172,10 +202,10 @@ public class Action extends TestBase implements ActionInterface {
 	}
 
 	@Override
-	public boolean selectBySendkeys(String value,WebElement ele) {
+	public boolean selectBySendkeys(By locator, String value) {
 		boolean flag = false;
 		try {
-			ele.sendKeys(value);
+			driver.findElement(locator).sendKeys(value);
 			flag = true;
 			return true;
 		} catch (Exception e) {
@@ -204,10 +234,10 @@ public class Action extends TestBase implements ActionInterface {
 	 * 
 	 */
 	@Override
-	public boolean selectByIndex(WebElement element, int index) {
+	public boolean selectByIndex(By locator, int index) {
 		boolean flag = false;
 		try {
-			Select s = new Select(element);
+			Select s = new Select(driver.findElement(locator));
 			s.selectByIndex(index);
 			flag = true;
 			return true;
@@ -235,10 +265,10 @@ public class Action extends TestBase implements ActionInterface {
 	 */
 
 	@Override
-	public boolean selectByValue(WebElement element,String value) {
+	public boolean selectByValue(By locator,String value) {
 		boolean flag = false;
 		try {
-			Select s = new Select(element);
+			Select s = new Select(driver.findElement(locator));
 			s.selectByValue(value);
 			flag = true;
 			return true;
@@ -267,10 +297,10 @@ public class Action extends TestBase implements ActionInterface {
 	 */
 
 	@Override
-	public boolean selectByVisibleText(String visibletext, WebElement ele) {
+	public boolean selectByVisibleText(By locator, String visibletext) {
 		boolean flag = false;
 		try {
-			Select s = new Select(ele);
+			Select s = new Select(driver.findElement(locator));
 			s.selectByVisibleText(visibletext);
 			flag = true;
 			return true;
@@ -286,14 +316,14 @@ public class Action extends TestBase implements ActionInterface {
 	}
 
 	@Override
-	public boolean mouseHoverByJavaScript(WebElement ele) {
+	public boolean mouseHoverByJavaScript(By locator) {
 		boolean flag = false;
 		try {
-			WebElement mo = ele;
+			WebElement mo = driver.findElement(locator);
 			String javaScript = "var evObj = document.createEvent('MouseEvents');"
 					+ "evObj.initMouseEvent(\"mouseover\",true, false, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);"
 					+ "arguments[0].dispatchEvent(evObj);";
-			JavascriptExecutor js = (JavascriptExecutor) driver;
+			
 			js.executeScript(javaScript, mo);
 			flag = true;
 			return true;
@@ -311,13 +341,38 @@ public class Action extends TestBase implements ActionInterface {
 		}
 	}
 
+	
+	
+	 public void clickElement(By locator) throws InterruptedException { 
+	    	
+	    	waitUntilElementVisible(locator);
+	    	js.executeScript("arguments[0].click();", driver.findElement(locator)); 
+	    	    
+	    }
+	
+	
+	    
+	 @Override 
+	 public  void waitforPageLoad() throws InterruptedException { 
+	 			ExpectedCondition<Boolean> pageLoadCondition = new
+	                ExpectedCondition<Boolean>() {
+	                    @Override
+						public Boolean apply(WebDriver driver) {
+	                        return ((JavascriptExecutor)driver).executeScript("return document.readyState").equals("complete");
+	                    }
+	                };
+	        WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(timeOut));
+	        wait.until(pageLoadCondition);
+	    }
+	
+	
 	@Override
-	public boolean JSClick(WebDriver driver, WebElement ele) {
+	public void JSClick(By locator) {
 		boolean flag = false;
 		try {
 			// WebElement element = driver.findElement(locator);
 			JavascriptExecutor executor = (JavascriptExecutor) driver;
-			executor.executeScript("arguments[0].click();", ele);
+			executor.executeScript("arguments[0].click();", driver.findElement(locator));
 			// driver.executeAsyncScript("arguments[0].click();", element);
 
 			flag = true;
@@ -334,11 +389,11 @@ public class Action extends TestBase implements ActionInterface {
 				System.out.println("Click Action is not performed");
 			}
 		}
-		return flag;
+		//return flag;
 	}
 	
 	@Override
-	public boolean switchToFrameByLocator(WebDriver driver, By locator) {
+	public boolean switchToFrameByLocator(By locator) {
 		
 
 		boolean flag = false;
@@ -361,7 +416,7 @@ public class Action extends TestBase implements ActionInterface {
 	}
 
 	@Override
-	public boolean switchToFrameByIndex(WebDriver driver,int index) {
+	public boolean switchToFrameByIndex(int index) {
 		boolean flag = false;
 		try {
 			new WebDriverWait(driver, Duration.ofSeconds(10)).until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//iframe")));
@@ -387,7 +442,7 @@ public class Action extends TestBase implements ActionInterface {
 	 * 
 	 */
 	@Override
-	public boolean switchToFrameById(WebDriver driver,String idValue) {
+	public boolean switchToFrameById(String idValue) {
 		boolean flag = false;
 		try {
 			driver.switchTo().frame(idValue);
@@ -413,7 +468,7 @@ public class Action extends TestBase implements ActionInterface {
 	 * 
 	 */
 	@Override
-	public boolean switchToFrameByName(WebDriver driver,String nameValue) {
+	public boolean switchToFrameByName(String nameValue) {
 		boolean flag = false;
 		try {
 			driver.switchTo().frame(nameValue);
@@ -432,7 +487,7 @@ public class Action extends TestBase implements ActionInterface {
 	}
 
 	@Override
-	public boolean switchToDefaultFrame(WebDriver driver) {
+	public boolean switchToDefaultFrame() {
 		boolean flag = false;
 		try {
 			driver.switchTo().defaultContent();
@@ -451,10 +506,10 @@ public class Action extends TestBase implements ActionInterface {
 	}
 
 	@Override
-	public void mouseOverElement(WebDriver driver,WebElement element) {
+	public void mouseOverElement(By locator) {
 		boolean flag = false;
 		try {
-			new Actions(driver).moveToElement(element).build().perform();
+			new Actions(driver).moveToElement(driver.findElement(locator)).build().perform();
 			flag = true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -468,15 +523,15 @@ public class Action extends TestBase implements ActionInterface {
 	}
 
 	@Override
-	public boolean moveToElement(WebDriver driver, WebElement ele) {
+	public boolean moveToElement(By locator) {
 		boolean flag = false;
 		try {
 			// WebElement element = driver.findElement(locator);
 			JavascriptExecutor executor = (JavascriptExecutor) driver;
-			executor.executeScript("arguments[0].scrollIntoView(true);", ele);
+			executor.executeScript("arguments[0].scrollIntoView(true);", locator);
 			Actions actions = new Actions(driver);
 			// actions.moveToElement(driver.findElement(locator)).build().perform();
-			actions.moveToElement(ele).build().perform();
+			actions.moveToElement(driver.findElement(locator)).build().perform();
 			flag = true;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -485,10 +540,10 @@ public class Action extends TestBase implements ActionInterface {
 	}
 
 	@Override
-	public boolean mouseover(WebDriver driver, WebElement ele) {
+	public boolean mouseover(By locator) {
 		boolean flag = false;
 		try {
-			new Actions(driver).moveToElement(ele).build().perform();
+			new Actions(driver).moveToElement(driver.findElement(locator)).build().perform();
 			flag = true;
 			return true;
 		} catch (Exception e) {
@@ -504,10 +559,10 @@ public class Action extends TestBase implements ActionInterface {
 		}
 	}
 	@Override
-	public boolean draggable(WebDriver driver,WebElement source, int x, int y) {
+	public boolean draggable(By source_locator, int x, int y) {
 		boolean flag = false;
 		try {
-			new Actions(driver).dragAndDropBy(source, x, y).build().perform();
+			new Actions(driver).dragAndDropBy(driver.findElement(source_locator), x, y).build().perform();
 			Thread.sleep(5000);
 			flag = true;
 			return true;
@@ -518,17 +573,17 @@ public class Action extends TestBase implements ActionInterface {
 			
 		} finally {
 			if (flag) {
-				System.out.println("Draggable Action is performed on \""+source+"\"");			
+				System.out.println("Draggable Action is performed on \""+source_locator+"\"");			
 			} else if(!flag) {
-				System.out.println("Draggable action is not performed on \""+source+"\"");
+				System.out.println("Draggable action is not performed on \""+source_locator+"\"");
 			}
 		}
 	}
 	@Override
-	public boolean draganddrop(WebDriver driver,WebElement source, WebElement target) {
+	public boolean draganddrop(By source_locator, By target_locator) {
 		boolean flag = false;
 		try {
-			new Actions(driver).dragAndDrop(source, target).perform();
+			new Actions(driver).dragAndDrop(driver.findElement(source_locator), driver.findElement(target_locator)).perform();
 			flag = true;
 			return true;
 		} catch (Exception e) {
@@ -544,12 +599,12 @@ public class Action extends TestBase implements ActionInterface {
 	}
 	
 	@Override
-	public boolean slider(WebDriver driver,WebElement ele, int x, int y) {
+	public boolean slider(By locator, int x, int y) {
 		boolean flag = false;
 		try {
 			// new Actions(driver).dragAndDropBy(dragitem, 400, 1).build()
 			// .perform();
-			new Actions(driver).dragAndDropBy(ele, x, y).build().perform();// 150,0
+			new Actions(driver).dragAndDropBy(driver.findElement(locator), x, y).build().perform();// 150,0
 			Thread.sleep(5000);
 			flag = true;
 			return true;
@@ -566,11 +621,11 @@ public class Action extends TestBase implements ActionInterface {
 	}
 	
 	@Override
-	public boolean rightclick(WebDriver driver,WebElement ele) {
+	public boolean rightclick(By locator) {
 		boolean flag = false;
 		try {
 			Actions clicker = new Actions(driver);
-			clicker.contextClick(ele).perform();
+			clicker.contextClick(driver.findElement(locator)).perform();
 			flag = true;
 			return true;
 			// driver.findElement(by1).sendKeys(Keys.DOWN);
@@ -587,7 +642,7 @@ public class Action extends TestBase implements ActionInterface {
 	}
 	
 	@Override
-	public boolean switchWindowByTitle(WebDriver driver,String windowTitle, int count) {
+	public boolean switchWindowByTitle(String windowTitle, int count) {
 		boolean flag = false;
 		try {
 			Set<String> windowList = driver.getWindowHandles();
@@ -614,7 +669,7 @@ public class Action extends TestBase implements ActionInterface {
 		}
 	}
 	@Override
-	public boolean switchToNewWindow(WebDriver driver) {
+	public boolean switchToNewWindow() {
 		boolean flag = false;
 		try {
 
@@ -635,7 +690,7 @@ public class Action extends TestBase implements ActionInterface {
 		}
 	}
 	@Override
-	public boolean switchToOldWindow(WebDriver driver) {
+	public boolean switchToOldWindow() {
 		boolean flag = false;
 		try {
 
@@ -682,7 +737,7 @@ public class Action extends TestBase implements ActionInterface {
 	 * 
 	 */
 	@Override
-	public boolean Alert(WebDriver driver) {
+	public boolean Alert() {
 		boolean presentFlag = false;
 		Alert alert = null;
 
@@ -708,7 +763,7 @@ public class Action extends TestBase implements ActionInterface {
 		return presentFlag;
 	}
 	@Override
-	public boolean launchUrl(WebDriver driver,String url) {
+	public boolean launchUrl(String url) {
 		boolean flag = false;
 		try {
 			driver.navigate().to(url);
@@ -726,7 +781,7 @@ public class Action extends TestBase implements ActionInterface {
 	}
 	
 	@Override
-	public boolean isAlertPresent(WebDriver driver) 
+	public boolean isAlertPresent() 
 	{ 
 		try 
 		{ 
@@ -740,7 +795,7 @@ public class Action extends TestBase implements ActionInterface {
 	}
 	
 	@Override
-	public String getAlertText(WebDriver driver) 
+	public String getAlertText() 
 	{
 		String presentText = "";
 		Alert alert = null;
@@ -763,7 +818,7 @@ public class Action extends TestBase implements ActionInterface {
 	}
 	
 	@Override
-	public String getTitle(WebDriver driver) {
+	public String getTitle() {
 		boolean flag = false;
 
 		String text = driver.getTitle();
@@ -774,7 +829,7 @@ public class Action extends TestBase implements ActionInterface {
 	}
 	
 	@Override
-	public String getCurrentURL(WebDriver driver)  {
+	public String getCurrentURL()  {
 		boolean flag = false;
 
 		String text = driver.getCurrentUrl();
@@ -785,57 +840,55 @@ public class Action extends TestBase implements ActionInterface {
 	}
 	
 	@Override
-	public boolean click(WebElement locator, String locatorName) {
+	public void click(By locator) {
 
 		boolean flag = false;
 		String errorMessage = null;
+		driver.findElement(locator).click();
+		flag = true;
+		
+		/*
 		try {
-			locator.click();
+			driver.findElement(locator).click();
 			flag = true;
-			return true;
+			//return true;
 		} catch (Exception e) {
 			errorMessage = e.getMessage();
-			return false;
-		} finally {
-			if (flag) {
-				System.out.println("Able to click on \""+locatorName+"\"");
-			} else {
-				System.out.println("Click Unable to click on \""+locatorName+"\""+" Error: "+errorMessage);
-			}
-		}
-
+			//return false;
+		} 
+		*/
 	}
 	
 	@Override
-	public void fluentWait(WebDriver driver,WebElement element, int timeOut) {
+	public void fluentWait(By locator) {
 	    Wait<WebDriver> wait = null;
 	    try {
 	        wait = new FluentWait<WebDriver>((WebDriver) driver)
 	        		.withTimeout(Duration.ofSeconds(20))
 	        	    .pollingEvery(Duration.ofSeconds(2))
 	        	    .ignoring(Exception.class);
-	        wait.until(ExpectedConditions.visibilityOf(element));
-	        element.click();
+	        wait.until(ExpectedConditions.visibilityOf(driver.findElement(locator)));
+	        driver.findElement(locator).click();
 	    }catch(Exception e) {
 	    }
 	}
 	
 	
 	@Override
-	public void implicitWait(WebDriver driver, int timeOut) {
+	public void implicitWait() {
 		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 	}
 	
 	
 	@Override
-	public void explicitWaitElementClickable(WebDriver driver, WebElement element, Duration timeOut) {
-		WebDriverWait wait = new WebDriverWait(driver,timeOut);
-		wait.until(ExpectedConditions.elementToBeClickable(element));
+	public void explicitWaitElementClickable(By locator) {
+		WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(timeOut));
+		wait.until(ExpectedConditions.elementToBeClickable(driver.findElement(locator)));
 	}
 	
 	@Override
-	public void explicitWait(WebDriver driver, By locator ,Duration timeOut) {
-		WebDriverWait wait = new WebDriverWait(driver,timeOut);
+	public void explicitWait(By locator) {
+		WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(timeOut));
 		wait.until(ExpectedConditions.presenceOfElementLocated(locator));
 		wait.until(ExpectedConditions.visibilityOf(driver.findElement(locator)));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
@@ -843,7 +896,7 @@ public class Action extends TestBase implements ActionInterface {
 	}
 	
 	@Override
-	public void pageLoadTimeOut(WebDriver driver, int timeOut) {
+	public void pageLoadTimeOut() {
 		driver.manage().timeouts().pageLoadTimeout(timeOut, TimeUnit.SECONDS);
 	}
 	
@@ -947,10 +1000,10 @@ public class Action extends TestBase implements ActionInterface {
 	
 	
 	@Override
-	public boolean isAttribtuePresent(WebElement element, String attribute) {
+	public boolean isAttribtuePresent(By locator, String attribute) {
 	    Boolean result = false;
 	    try {
-	        String value = element.getAttribute(attribute);
+	        String value = driver.findElement(locator).getAttribute(attribute);
 	        if (value != null){
 	            result = true;
 	        }
@@ -959,27 +1012,23 @@ public class Action extends TestBase implements ActionInterface {
 	    return result;
 	}
 	
-	@Override
-	public void waitUntilElementVisible(WebDriver driver, WebElement element) {
+	
+	public void waitUntilElementVisible(By locator) {
 
-		WebDriverWait wait = new WebDriverWait(driver,timeOut);
-		wait.until(ExpectedConditions.visibilityOf(element));
+		WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(timeOut));
+		wait.until(ExpectedConditions.visibilityOf(driver.findElement(locator)));
 	}
 	
 	
 	@Override
-	public void waitForElement(String elementText ,WebElement element) throws InterruptedException {
-	   	  
-	   	  //System.out.println("item is "+item);
-	   	  //System.out.println("v1 is "+v1);
-	   	  
-	   	  
+	public void waitForElement(By locator, String elementText) throws InterruptedException {
+	   	  		
 	   	  for (int second = 0;; second++) {
 	   		     if (second >= 40) fail("timeout");
 	   		     try { 
 	   		    	
 	   		    	 Thread.sleep(1000);
-	   		    	 String g1 = element.getText();
+	   		    	 String g1 = driver.findElement(locator).getText();
 	   		    	 elementText = elementText.trim();
 	   		    	 g1 = g1.trim();
 	   		    	
@@ -995,6 +1044,78 @@ public class Action extends TestBase implements ActionInterface {
 	   	  	
 	   	  }
 	   	  
-	     }	
+	     }
 
+	
+	@Override
+	public void elementPresent(By locator) throws InterruptedException {
+	   	  
+	   	WebDriverWait wait = new WebDriverWait(driver,Duration.ofSeconds(timeOut));
+	   	  for (int second = 0;; second++) {
+	   		     if (second >= 40) fail("timeout");
+	   		     try { 
+	   		    	
+	   		    	 Thread.sleep(3000);
+	   		    	 	   		    	
+	   		    	 if (isDisplayed(locator)) 
+	   		    	 	 break;		    	 
+	   		     } 
+	   		     catch (Exception e){
+	   		    	 System.out.println(e.getMessage());
+	   		     }
+	   		     Thread.sleep(1000);
+	   	  	
+	   	  }
+	   	  
+	     }
+	
+	
+
+	//***********************General API Functions*****************************
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	//***********************General Page Functions*****************************
+	
+	public void TextArea(String label, String text) throws InterruptedException {
+		WebElement field = driver.findElement(By.xpath("//label[contains(text(),'"+label+"')]/..//textarea"));
+		field.sendKeys(text);
+	}
+	
+	public void clickRecordinRelatedList() throws InterruptedException {
+		System.out.println(rndNum.get("randomId"));
+		url.put("RelatedListURL", getCurrentURL());
+		By field = By.xpath("//a[contains(@title, '"+ TestBase.rndNum.get("randomId")+"')]");
+		for (int i=0; i<3; i++) {
+			if (isDisplayed(field)) {}
+			else {driver.navigate().to(url.get("RelatedListURL")); i++;Thread.sleep(5000);}
+		}
+		JSClick(field);
+	}
+	
+	public void saveURL(String record) {
+		String URL = driver.getCurrentUrl();
+		url.put(record, URL);
+	}
+	
+	public void gotoRecordURL(String env, String object, String sfdcId) {
+		driver.navigate().to("https://flocksafety--"+env+".sandbox.lightning.force.com/lightning/r/"+object+"/"+sfdcId+"/view");
+	}
+	@Override
+	public void gotoRecordUsingRelatedListURL(String env, String object) {
+		//driver.navigate().to("https://flocksafety--"+env+".sandbox.lightning.force.com/lightning/r/"+object+"/"+sfdcId+"/view");
+		driver.navigate().to("https://flocksafety--"+env+".sandbox.lightning.force.com/lightning/o/"+object+"/list?filterName=__Recent");
+	}
+	
+	
 }

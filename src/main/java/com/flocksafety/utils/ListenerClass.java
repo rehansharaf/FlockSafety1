@@ -18,7 +18,7 @@ import com.flocksafety.base.TestBase;
 
 public class ListenerClass extends ExtentManager implements ITestListener {
 
-	Action action= new Action();
+	Action action= new Action(BrowserFactory.getInstance().getDriver());
 	
 	public void onTestStart(ITestResult result) {
 
@@ -53,6 +53,7 @@ public class ListenerClass extends ExtentManager implements ITestListener {
 			extenttest.get().log(Status.FAIL,MarkupHelper.createLabel(result.getThrowable() + " - Test Case Failed", ExtentColor.RED));
 
 			String imgPath = action.screenShot(BrowserFactory.getInstance().getDriver(),result.getName());
+			//String imgPath = action.screenShot(result.getName());
 
 			//test.fail("ScreenShot is Attached", MediaEntityBuilder.createScreenCaptureFromPath(imgPath).build());
 			//test.fail("ScreenShot is Attached", MediaEntityBuilder.createScreenCaptureFromBase64String(imgPath).build());
