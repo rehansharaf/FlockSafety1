@@ -1,3 +1,7 @@
 [main] 00:45:49,147 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Start Loging in to SF TEST START=========================================
 [main] 00:52:46,811 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Start Loging in to SF TEST START=========================================
 [main] 00:57:33,598 INFO  com.flocksafety.utils.Log.startTestCase(Log.java:11) - =====================================Start Loging in to SF TEST START=========================================
+[main] 10:44:38,760 WARN  com.flocksafety.utils.Log.warn(Log.java:28) - =====================================loginToSalesforce TEST SKIPPED =========================================
+[main] 10:44:38,768 WARN  com.flocksafety.utils.Log.warn(Log.java:28) - =====================================failedLoginTestCase TEST SKIPPED =========================================
+[main] 10:49:31,878 WARN  com.flocksafety.utils.Log.warn(Log.java:28) - =====================================loginToSalesforce TEST SKIPPED =========================================
+[main] 10:49:31,889 WARN  com.flocksafety.utils.Log.warn(Log.java:28) - =====================================failedLoginTestCase TEST SKIPPED =========================================
